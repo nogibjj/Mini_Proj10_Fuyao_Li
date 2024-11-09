@@ -34,13 +34,13 @@ def test_query(spark):
     result = query_data(
         spark, df
     )
-    assert result is None
+    assert result is not None
 
 
 def test_transform(spark):
     df = load(spark)
     result = transform(df)
-    assert result is None
+    assert result is not None
 
 
 if __name__ == "__main__":
