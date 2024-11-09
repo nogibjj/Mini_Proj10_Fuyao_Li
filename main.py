@@ -1,19 +1,28 @@
-"""
-Main cli or app entry point
-"""
-
-from mylib.calculator import add
-import click
-
-#var=1;var=2
-
-@click.command("add")
-@click.argument("a", type=int)
-@click.argument("b", type=int)
-def add_cli(a, b):
-    click.echo(add(a, b))
-
+from mylib.calculator import (
+    log_output,
+    create_spark_session,
+    extract,
+    load,
+    query_data,
+    transform
+)
 
 if __name__ == "__main__":
-    # pylint: disable=no-value-for-parameter
-    add_cli()
+    # Main ETL process
+    spark = create_spark_session("PySparkTrump")
+
+    # Extract
+    extract()
+
+    # Load
+    df = load(spark)
+
+    # Query
+    query_data(spark, df)
+
+    # Transform
+    transform(df)
+
+    # Stop the Spark session
+    spark.stop()
+    log_output("Spark session stopped.")
